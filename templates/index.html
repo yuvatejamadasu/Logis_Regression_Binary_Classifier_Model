@@ -1,0 +1,1096 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Breast Cancer Prediction | MedPredict</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #38bdf8;
+            --secondary: #818cf8;
+            --background: #080f1e;
+            --card: #111c30;
+            --border: #26364e;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 7%;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(
+                135deg,
+                #38bdf8,
+                #818cf8
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            color: #080f1e;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                90deg,
+                #38bdf8,
+                #818cf8
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-status {
+            color: #4ade80;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
+        .hero {
+            margin-bottom: 35px;
+        }
+
+        .hero-label {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* STAT CARDS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .stat-value span {
+            color: var(--primary);
+        }
+
+        /* FORM */
+
+        .main-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 35px;
+            margin-bottom: 30px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-heading h2 {
+            font-size: 21px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .section-badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* FEATURE SECTIONS */
+
+        .feature-section {
+            margin-bottom: 35px;
+        }
+
+        .feature-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #334155;
+            background: #0b1425;
+            color: white;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+        }
+
+        /* BUTTONS */
+
+        .button-group {
+            display: flex;
+            align-items: stretch;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 15px 22px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(
+                135deg,
+                #38bdf8,
+                #818cf8
+            );
+            color: #080f1e;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid var(--border);
+        }
+
+        .btn-random {
+            background: rgba(129, 140, 248, 0.12);
+            color: #a5b4fc;
+            border: 1px solid rgba(129, 140, 248, 0.35);
+        }
+
+        .btn-random:hover {
+            background: rgba(129, 140, 248, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* PROJECT INFORMATION */
+
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+        }
+
+        .project-item {
+            background: #0b1425;
+            border: 1px solid #26364e;
+            border-radius: 14px;
+            padding: 22px 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .project-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .project-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 12px;
+            border-radius: 12px;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .project-item h3 {
+            color: #e2e8f0;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .project-item p {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* DEVELOPER HIGHLIGHT */
+
+        .developer-card {
+            background: linear-gradient(
+                145deg,
+                rgba(56, 189, 248, 0.15),
+                rgba(129, 140, 248, 0.12)
+            );
+
+            border: 1px solid #6478f5;
+
+            box-shadow: 0 0 25px
+                rgba(129, 140, 248, 0.10);
+        }
+
+        .developer-card .project-icon {
+            background: linear-gradient(
+                135deg,
+                #38bdf8,
+                #818cf8
+            );
+
+            color: #080f1e;
+        }
+
+        .developer-card h3 {
+            color: #a5b4fc;
+        }
+
+        .developer-card p {
+            color: #cbd5e1;
+        }
+
+        /* RESULT */
+
+        .result-card {
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            background: #111c30;
+        }
+
+        .result-card.benign {
+            border-color: #166534;
+            background: rgba(22, 101, 52, 0.1);
+        }
+
+        .result-card.malignant {
+            border-color: #991b1b;
+            background: rgba(153, 27, 27, 0.1);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .result-label {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .result-title {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .benign .result-title {
+            color: #4ade80;
+        }
+
+        .malignant .result-title {
+            color: #f87171;
+        }
+
+        .confidence {
+            text-align: right;
+        }
+
+        .confidence-value {
+            color: var(--primary);
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .result-description {
+            margin-top: 20px;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* ERROR */
+
+        .error-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #991b1b;
+            color: #fca5a5;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.8;
+            padding: 30px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .project-info {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-wrap: wrap;
+            }
+
+            .btn-primary {
+                flex-basis: 100%;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 18px 5%;
+            }
+
+            .container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-card {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .result-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .confidence {
+                text-align: left;
+            }
+
+            .section-heading {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ✚
+        </div>
+
+        <span>
+            Med<span class="gradient-text">Predict</span>
+        </span>
+
+    </div>
+
+    <div class="nav-status">
+        ● AI Model Ready
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-label">
+        MACHINE LEARNING • BINARY CLASSIFICATION
+    </div>
+
+    <h1>
+        Breast Cancer
+        <span class="gradient-text">Prediction</span>
+    </h1>
+
+    <p>
+        An intelligent prediction system powered by Logistic
+        Regression. Enter the tumor measurement features to
+        generate a model-based classification.
+    </p>
+
+</section>
+
+
+<!-- STAT CARDS -->
+
+<section class="stats">
+
+    <div class="stat-card">
+
+        <div class="stat-label">
+            Machine Learning Algorithm
+        </div>
+
+        <div class="stat-value">
+            Logistic <span>Regression</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-label">
+            Classification Type
+        </div>
+
+        <div class="stat-value">
+            Binary <span>Classification</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-label">
+            Model Input Features
+        </div>
+
+        <div class="stat-value">
+            30 <span>Features</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESULT -->
+
+{% if result %}
+
+<div class="result-card {{ result_class }}">
+
+    <div class="result-header">
+
+        <div>
+
+            <div class="result-label">
+                MODEL PREDICTION RESULT
+            </div>
+
+            <div class="result-title">
+                {{ result }}
+            </div>
+
+        </div>
+
+        <div class="confidence">
+
+            <div class="result-label">
+                Model Probability
+            </div>
+
+            <div class="confidence-value">
+                {{ confidence }}%
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="result-description">
+        {{ description }}
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- ERROR -->
+
+{% if error %}
+
+<div class="error-box">
+    ⚠ {{ error }}
+</div>
+
+{% endif %}
+
+
+<!-- FORM -->
+
+<form action="/predict" method="POST">
+
+<div class="main-card">
+
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>
+                Tumor Measurements
+            </h2>
+
+            <p>
+                Enter the 30 numerical features required
+                by the trained model.
+            </p>
+
+        </div>
+
+        <div class="section-badge">
+            30 Inputs Required
+        </div>
+
+    </div>
+
+
+    <!-- MEAN FEATURES -->
+
+    <div class="feature-section">
+
+        <div class="feature-title">
+            01 — Mean Features
+        </div>
+
+        <div class="feature-grid">
+
+            {% for feature in features[:10] %}
+
+            <div class="input-group">
+
+                <label for="{{ feature }}">
+                    {{ labels[feature] }}
+                </label>
+
+                <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    id="{{ feature }}"
+                    name="{{ feature }}"
+                    value="{{ values.get(feature, '') }}"
+                    placeholder="Enter value"
+                    required
+                >
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- STANDARD ERROR -->
+
+    <div class="feature-section">
+
+        <div class="feature-title">
+            02 — Standard Error Features
+        </div>
+
+        <div class="feature-grid">
+
+            {% for feature in features[10:20] %}
+
+            <div class="input-group">
+
+                <label for="{{ feature }}">
+                    {{ labels[feature] }}
+                </label>
+
+                <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    id="{{ feature }}"
+                    name="{{ feature }}"
+                    value="{{ values.get(feature, '') }}"
+                    placeholder="Enter value"
+                    required
+                >
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- WORST FEATURES -->
+
+    <div class="feature-section">
+
+        <div class="feature-title">
+            03 — Worst Features
+        </div>
+
+        <div class="feature-grid">
+
+            {% for feature in features[20:] %}
+
+            <div class="input-group">
+
+                <label for="{{ feature }}">
+                    {{ labels[feature] }}
+                </label>
+
+                <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    id="{{ feature }}"
+                    name="{{ feature }}"
+                    value="{{ values.get(feature, '') }}"
+                    placeholder="Enter value"
+                    required
+                >
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="button-group">
+
+        <button
+            type="submit"
+            class="btn btn-primary">
+
+            Generate Prediction →
+
+        </button>
+
+
+        <button
+            type="reset"
+            class="btn btn-secondary">
+
+            ↺ Reset Values
+
+        </button>
+
+
+        <button
+            type="button"
+            class="btn btn-random"
+            onclick="generateRandomValues()">
+
+            ✦ Random Values
+
+        </button>
+
+    </div>
+
+
+    <!-- PROJECT INFORMATION -->
+
+    <div class="project-info">
+
+
+        <div class="project-item">
+
+            <div class="project-icon">
+                ◈
+            </div>
+
+            <h3>
+                Machine Learning Project
+            </h3>
+
+            <p>
+                Breast Cancer Binary Classification
+            </p>
+
+        </div>
+
+
+        <div class="project-item">
+
+            <div class="project-icon">
+                ⌘
+            </div>
+
+            <h3>
+                Logistic Regression Algorithm
+            </h3>
+
+            <p>
+                Supervised Machine Learning Model
+            </p>
+
+        </div>
+
+
+        <!-- HIGHLIGHTED DEVELOPER -->
+
+        <div class="project-item developer-card">
+
+            <div class="project-icon">
+                ♡
+            </div>
+
+            <h3>
+                Developed by M. Yuva Teja
+            </h3>
+
+            <p>
+                Python • Flask • Scikit-learn
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</form>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        MedPredict • Logistic Regression Machine Learning Project
+    </p>
+
+    <p>
+        Educational demonstration only. This application is
+        not a medical diagnostic tool.
+    </p>
+
+</footer>
+
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+
+// ==========================================
+// RANDOM VALUE GENERATOR
+// ==========================================
+
+function generateRandomValues() {
+
+    const inputs = document.querySelectorAll(
+        'form input[type="number"]'
+    );
+
+    inputs.forEach(function(input) {
+
+        const feature = input.name.toLowerCase();
+
+        let min = 0;
+        let max = 1;
+
+        // Radius
+
+        if (feature.includes("radius")) {
+            min = 6;
+            max = 30;
+        }
+
+        // Texture
+
+        else if (feature.includes("texture")) {
+            min = 9;
+            max = 40;
+        }
+
+        // Perimeter
+
+        else if (feature.includes("perimeter")) {
+            min = 40;
+            max = 200;
+        }
+
+        // Area
+
+        else if (feature.includes("area")) {
+            min = 100;
+            max = 3000;
+        }
+
+        // Smoothness
+
+        else if (feature.includes("smoothness")) {
+            min = 0.05;
+            max = 0.2;
+        }
+
+        // Compactness
+
+        else if (feature.includes("compactness")) {
+            min = 0.01;
+            max = 0.5;
+        }
+
+        // Concavity
+
+        else if (feature.includes("concavity")) {
+            min = 0;
+            max = 0.6;
+        }
+
+        // Concave points
+
+        else if (feature.includes("concave")) {
+            min = 0;
+            max = 0.25;
+        }
+
+        // Symmetry
+
+        else if (feature.includes("symmetry")) {
+            min = 0.1;
+            max = 0.7;
+        }
+
+        // Fractal dimension
+
+        else if (feature.includes("fractal")) {
+            min = 0.01;
+            max = 0.2;
+        }
+
+        // Standard error values
+
+        if (feature.includes("_se") ||
+            feature.endsWith(" se")) {
+
+            min = 0.001;
+            max = 5;
+
+        }
+
+        // Generate random number
+
+        const randomValue = Math.random() * (max - min) + min;
+
+        input.value = randomValue.toFixed(5);
+
+    });
+
+
+    // Show confirmation
+
+    alert(
+        "Successfully generated random values for all 30 fields!"
+    );
+
+}
+
+
+// ==========================================
+// RESET INPUT VALUES
+// ==========================================
+
+document.querySelector("form").addEventListener(
+    "reset",
+    function() {
+
+        setTimeout(function() {
+
+            document.querySelectorAll(
+                'form input[type="number"]'
+            ).forEach(function(input) {
+
+                input.value = "";
+
+            });
+
+        }, 0);
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
+
